@@ -17,7 +17,10 @@
   var fr=document.getElementById('frame'),pic=document.getElementById('pic'),im=document.getElementById('pimg');
   function show(u){im.src=u;fr.classList.add('has')}
   try{var sp=localStorage.getItem('portrait');if(sp)show(sp)}catch(e){}
-  var pf=new Image();pf.onload=function(){show('assets/portrait.jpg')};pf.src='assets/portrait.jpg';
+  if(!fr.classList.contains('has')){
+    if(im.complete&&im.naturalWidth)fr.classList.add('has');
+    else im.addEventListener('load',function(){fr.classList.add('has')},{once:true});
+  }
   fr.addEventListener('click',function(){pic.click()});
   pic.addEventListener('change',function(){
     var f=pic.files&&pic.files[0];if(!f)return;
